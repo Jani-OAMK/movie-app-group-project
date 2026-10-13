@@ -104,17 +104,11 @@ Additional instructions are available in [Presentation/README.md](Presentation/R
 
 ## Architecture
 
-```text
-React frontend
-    |
-    | HTTP / JSON
-    v
-Node.js backend
-    |
-    +---- PostgreSQL
-    |
-    +---- TMDB API
-```
+PostgreSQL data is stored in the Docker volume `postgres_movie_data`.
+Local rebuilds keep that volume unless you remove it deliberately. The GitHub
+Actions deployment resets this volume on every deployment, so all server-side
+database data is intentionally deleted and recreated from `schema.sql` and
+`seed.sql`.
 
 The frontend communicates with the backend through `/api` routes. TMDB requests are handled by the backend, so the TMDB API token is not exposed to the browser.
 
@@ -173,7 +167,9 @@ Access tokens are used to authenticate protected requests. Refresh tokens are st
 
 Passwords are hashed with bcrypt before they are stored in the database.
 
-Protected backend routes verify the authenticated user and enforce group membership and ownership permissions.
+The deployment removes and rebuilds the backend, frontend, and `movie-db`
+containers. It also removes `postgres_movie_data`, so the database is rebuilt
+from `schema.sql` and `seed.sql` on every deployment.
 
 ## Testing
 
