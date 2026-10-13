@@ -92,14 +92,24 @@ jobs:
 
             echo "Waiting for database to accept connections..."
             for i in $(seq 1 30); do
-              if docker exec movie-db pg_isready -U "$DB_USER" -d "$DB_NAME" >/dev/null 2>&1; then
+              if docker exec movie-db pg_isready -U "$DB_USER" -d postgres >/dev/null 2>&1; then
                 break
               fi
               sleep 1
             done
 
             if ! docker exec movie-db psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1;" >/dev/null 2>&1; then
-              docker exec movie-db createdb -U "$DB_USER" "$DB_NAME"
+              for i in $(seq 1 30); do
+                if docker exec movie-db createdb -U "$DB_USER" "$DB_NAME" >/dev/null 2>&1; then
+                  break
+                fi
+                sleep 1
+              done
+            fi
+
+            if ! docker exec movie-db psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1;" >/dev/null 2>&1; then
+              echo "Application database was not created"
+              exit 1
             fi
 
             docker exec -i movie-db psql -U "$DB_USER" -d "$DB_NAME" < Backend/schema.sql
