@@ -98,6 +98,10 @@ jobs:
               sleep 1
             done
 
+            if ! docker exec movie-db psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1;" >/dev/null 2>&1; then
+              docker exec movie-db createdb -U "$DB_USER" "$DB_NAME"
+            fi
+
             docker exec -i movie-db psql -U "$DB_USER" -d "$DB_NAME" < Backend/schema.sql
 
             echo "Applying migrations for existing databases..."
