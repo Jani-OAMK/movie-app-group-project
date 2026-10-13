@@ -66,8 +66,10 @@ The updated `Backend/schema.sql` contains this column for databases created
 using the new schema. Do not delete an existing database to add the column.
 
 PostgreSQL data is stored in the Docker volume `postgres_movie_data`.
-Rebuilding application containers does not delete that data. Do not remove
-the volume unless you intentionally want to delete the database.
+Local rebuilds keep that volume unless you remove it deliberately. The GitHub
+Actions deployment resets this volume on every deployment, so all server-side
+database data is intentionally deleted and recreated from `schema.sql` and
+`seed.sql`.
 
 **Schema changes on a long-lived database:** `schema.sql` only uses
 `CREATE TABLE IF NOT EXISTS`, so it does nothing on tables that already exist,
@@ -111,7 +113,9 @@ http://<VM_PUBLIC_IP>:5173
 
 
 
-The deployment removes and rebuilds only the backend and frontend containers. The `movie-db` container and its `postgres_movie_data` volume are kept so existing database data remains available.
+The deployment removes and rebuilds the backend, frontend, and `movie-db`
+containers. It also removes `postgres_movie_data`, so the database is rebuilt
+from `schema.sql` and `seed.sql` on every deployment.
 
 
 ## Git Branching Model

@@ -53,24 +53,21 @@ jobs:
             
             docker network create movie-net 2>/dev/null || true
 
-            docker rm -f movie-backend movie-frontend 2>/dev/null || true
+            # This deployment intentionally starts PostgreSQL from a clean volume.
+            docker rm -f movie-backend movie-frontend movie-db 2>/dev/null || true
+            docker volume rm postgres_movie_data 2>/dev/null || true
             docker build -t movie-backend ./Backend
             docker build -t movie-frontend ./Frontend
 
             docker volume create postgres_movie_data >/dev/null
-            if docker container inspect movie-db >/dev/null 2>&1; then
-              docker start movie-db >/dev/null 2>&1 || true
-            else
-              docker run -d --name movie-db \
-                --network movie-net \
-                -e POSTGRES_USER="$DB_USER" \
-                -e POSTGRES_PASSWORD="$DB_PASSWORD" \
-                -e POSTGRES_DB="$DB_NAME" \
-                -p 5432:5432 \
-                -v postgres_movie_data:/var/lib/postgresql/data \
-                postgres:16
-            fi
-            docker network connect movie-net movie-db 2>/dev/null || true
+            docker run -d --name movie-db \
+              --network movie-net \
+              -e POSTGRES_USER="$DB_USER" \
+              -e POSTGRES_PASSWORD="$DB_PASSWORD" \
+              -e POSTGRES_DB="$DB_NAME" \
+              -p 5432:5432 \
+              -v postgres_movie_data:/var/lib/postgresql/data \
+              postgres:16
 
             docker run -d \
               --name movie-backend \
