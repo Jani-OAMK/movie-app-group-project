@@ -46,7 +46,7 @@
           ui-sans-serif,
           system-ui,
           -apple-system,
-          "Segoe UI",
+          'Segoe UI',
           sans-serif;
         overflow: hidden;
       }
@@ -544,7 +544,7 @@
         transition: opacity 0.3s;
       }
       .slide::after {
-        content: "";
+        content: '';
         position: absolute;
         inset: 0;
         pointer-events: none;
@@ -853,33 +853,44 @@
             <article class="card">
               <h3>Marianna</h3>
               <div class="role">Product Owner · Developer</div>
-              <p><span class="todo">Contribution summary</span></p>
-              <p class="hours">Worklog: <span class="todo">XX h</span></p>
+              <p>
+                Product backlog management, full-stack development, TMDB API
+                integration, technical problem-solving, and project
+                documentation.
+              </p>
+              <p class="hours">Worklog: <span>98 h</span></p>
             </article>
             <article class="card">
               <h3>Jani</h3>
               <div class="role">Scrum Master · Developer</div>
               <p>
-                Backend and API development, TMDB integration, testing,
-                technical problem-solving, team coordination, and project
+                Team coordination, backend and API development, TMDB
+                integration, testing, technical problem-solving, and project
                 documentation.
               </p>
-              <p class="hours">Worklog: <span class="todo">XX h</span></p>
+              <p class="hours">Worklog: <span>158,5 h</span></p>
             </article>
             <article class="card">
               <h3>Emil</h3>
               <div class="role">Developer</div>
-              <p><span class="todo">Contribution summary</span></p>
-              <p class="hours">Worklog: <span class="todo">XX h</span></p>
+              <p>
+                GitHub-Jira automation deployment, CI/CD pipelines
+                implementation, automated deployments and testing environments
+                management, full-stack development, TMDB API integration,
+                project documentation
+              </p>
+              <p class="hours">Worklog: <span>115,5 h</span></p>
             </article>
             <article class="card">
               <h3>Joona</h3>
               <div class="role">Developer</div>
               <p>
-                Full-stack development, authentication, search and group features,
-                Git workflow design and implementation, testing, and project documentation.
+                Authentication, UI design, administration in Github, full-stack
+                development, search and group features, testing, and project
+                documentation.
+                <br></br>
               </p>
-              <p class="hours">Worklog: <span class="todo">XX h</span></p>
+              <p class="hours">Worklog: <span>87,5 h</span></p>
             </article>
           </div>
         </div>
@@ -1146,7 +1157,7 @@
             </div>
             <div
               class="profile-carousel"
-              data-interval="2800"
+              data-interval="1500"
               role="region"
               aria-roledescription="carousel"
               aria-label="Profile Dashboard screenshots"
@@ -1334,9 +1345,10 @@
             <article class="card">
               <h3>Marianna</h3>
               <p>
-                <span class="todo"
-                  >One personal challenge, lesson or next-time improvement</span
-                >
+                One key learning experience was getting familiar with the
+                Product Owner role and realizing how important it is to
+                understand the bigger picture when making decisions and
+                coordinating different aspects of a project.
               </p>
             </article>
             <article class="card">
@@ -1348,19 +1360,22 @@
               </p>
             </article>
             <article class="card">
-              <h3>Emil</h3>
-              <p>
-                <span class="todo"
-                  >One personal challenge, lesson or next-time improvement</span
-                >
-              </p>
-            </article>
-            <article class="card">
               <h3>Joona</h3>
               <p>
                 I initially approached authentication mainly as a login feature.
-                Reworking it taught me to consider the complete session lifecycle, including access tokens,
-                refresh tokens, protected requests, logout, and session restoration.
+                Reworking it taught me to consider the complete session
+                lifecycle, including access tokens, refresh tokens, protected
+                requests, logout, and session restoration.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Emil</h3>
+              <p>
+                I would collect more user data, especially on user journeys, to
+                improve and personalize the user experience. Skills in
+                full-stack development, automated testing, GitHub, and automated
+                deployments would helpme implementing reliable improvements
+                efficiently.
               </p>
             </article>
           </div>
@@ -1374,12 +1389,14 @@
       >
         <div class="content">
           <p class="eyebrow">12 · Conclusion</p>
-          <h2 id="slide-title-13">
-            Working software.<br /><span class="accent">Shared learning.</span>
-          </h2>
+          <h2 id="slide-title-13">Final thoughts and improvements<br /></h2>
           <p class="lead">
-            <span class="todo">Final thoughts</span> ·
-            <span class="todo">Future improvements</span>
+            Overall, the project went well, and we gained valuable experience
+            working together and developing the system. In future projects, we
+            should define the expected final outcome more clearly from the
+            beginning to make technical implementation more efficient. We could
+            also make greater use of AI agents, for example, to support
+            documentation and streamline development workflows.
           </p>
           <p class="quote">Thank you. Questions?</p>
         </div>
@@ -1428,16 +1445,16 @@
     <script>
       // The controller keeps navigation state in the URL so any slide can be opened directly.
       (() => {
-        const slides = [...document.querySelectorAll(".slide")];
-        const counter = document.querySelector("#counter");
-        const progress = document.querySelector("#progress");
-        const sectionLabel = document.querySelector("#sectionLabel");
-        const announcer = document.querySelector("#announcer");
-        const help = document.querySelector("#help");
-        const helpCloseButton = document.querySelector("#closeHelp");
-        const deck = document.querySelector("#deck");
-        const footer = document.querySelector(".footer");
-        const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+        const slides = [...document.querySelectorAll('.slide')];
+        const counter = document.querySelector('#counter');
+        const progress = document.querySelector('#progress');
+        const sectionLabel = document.querySelector('#sectionLabel');
+        const announcer = document.querySelector('#announcer');
+        const help = document.querySelector('#help');
+        const helpCloseButton = document.querySelector('#closeHelp');
+        const deck = document.querySelector('#deck');
+        const footer = document.querySelector('.footer');
+        const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
         const progressPercent = (index) =>
           Math.round(((index + 1) / slides.length) * 100);
         let current = 0;
@@ -1446,30 +1463,30 @@
         function show(target, { updateUrl = true } = {}) {
           const next = Math.max(0, Math.min(slides.length - 1, target));
           const direction =
-            next >= current ? "enter-forward" : "enter-backward";
+            next >= current ? 'enter-forward' : 'enter-backward';
           current = next;
           slides.forEach((slide, index) => {
             const isActive = index === current;
-            slide.classList.remove("active", "enter-forward", "enter-backward");
-            slide.setAttribute("aria-hidden", isActive ? "false" : "true");
+            slide.classList.remove('active', 'enter-forward', 'enter-backward');
+            slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
             if (!isActive) return;
-            slide.classList.add("active", direction);
+            slide.classList.add('active', direction);
           });
-          const label = slides[current].dataset.section ?? "Presentation";
+          const label = slides[current].dataset.section ?? 'Presentation';
           counter.textContent = `${current + 1} / ${slides.length}`;
           sectionLabel.textContent = label;
           // Only the slide name is announced, not the whole slide content.
           announcer.textContent = `Slide ${current + 1} of ${slides.length}: ${label}`;
           const percent = progressPercent(current);
           progress.style.width = `${percent}%`;
-          progress.setAttribute("aria-valuenow", percent);
+          progress.setAttribute('aria-valuenow', percent);
           progress.setAttribute(
-            "aria-valuetext",
+            'aria-valuetext',
             `Slide ${current + 1} of ${slides.length}`,
           );
           document.title = `${current + 1}/${slides.length} · Movie Web Application`;
           if (updateUrl)
-            history.replaceState(null, "", `#slide-${current + 1}`);
+            history.replaceState(null, '', `#slide-${current + 1}`);
         }
 
         const next = () => show(current + 1);
@@ -1479,53 +1496,53 @@
             document.exitFullscreen()
           : document.documentElement.requestFullscreen();
         const openHelp = () => {
-          if (help.classList.contains("open")) return;
+          if (help.classList.contains('open')) return;
           helpOpener = document.activeElement;
-          help.classList.add("open");
+          help.classList.add('open');
           deck.inert = true;
           footer.inert = true;
           helpCloseButton.focus();
         };
         const closeHelp = () => {
-          if (!help.classList.contains("open")) return;
-          help.classList.remove("open");
+          if (!help.classList.contains('open')) return;
+          help.classList.remove('open');
           deck.inert = false;
           footer.inert = false;
           if (helpOpener instanceof HTMLElement) helpOpener.focus();
         };
 
         const buttonActions = {
-          "#prev": previous,
-          "#home": () => show(0),
-          "#helpBtn": openHelp,
-          "#full": toggleFullscreen,
-          "#next": next,
-          "#closeHelp": closeHelp,
+          '#prev': previous,
+          '#home': () => show(0),
+          '#helpBtn': openHelp,
+          '#full': toggleFullscreen,
+          '#next': next,
+          '#closeHelp': closeHelp,
         };
         for (const [selector, action] of Object.entries(buttonActions)) {
-          document.querySelector(selector).addEventListener("click", action);
+          document.querySelector(selector).addEventListener('click', action);
         }
 
         const keyActions = {
           ArrowRight: next,
           PageDown: next,
-          " ": next,
+          ' ': next,
           ArrowLeft: previous,
           PageUp: previous,
           Home: () => show(0),
           End: () => show(slides.length - 1),
           f: toggleFullscreen,
-          "?": openHelp,
+          '?': openHelp,
         };
-        document.addEventListener("keydown", (e) => {
+        document.addEventListener('keydown', (e) => {
           if (e.ctrlKey || e.metaKey || e.altKey) return;
-          if (help.classList.contains("open")) {
-            if (e.key === "Escape") {
+          if (help.classList.contains('open')) {
+            if (e.key === 'Escape') {
               e.preventDefault();
               closeHelp();
               return;
             }
-            if (e.key === "Tab") {
+            if (e.key === 'Tab') {
               const focusable = [
                 ...help.querySelectorAll(
                   'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
@@ -1545,9 +1562,9 @@
           }
           // Space on a focused button should press that button, not change slide.
           if (
-            e.key === " " &&
+            e.key === ' ' &&
             e.target instanceof Element &&
-            e.target.closest("button")
+            e.target.closest('button')
           )
             return;
           const action =
@@ -1559,12 +1576,12 @@
 
         let touchStartX = null;
         document.addEventListener(
-          "touchstart",
+          'touchstart',
           (e) => (touchStartX = e.changedTouches[0].clientX),
           { passive: true },
         );
         document.addEventListener(
-          "touchend",
+          'touchend',
           (e) => {
             if (touchStartX === null) return;
             const distance = e.changedTouches[0].clientX - touchStartX;
@@ -1573,49 +1590,49 @@
           },
           { passive: true },
         );
-        for (const box of document.querySelectorAll("[data-image]")) {
+        for (const box of document.querySelectorAll('[data-image]')) {
           const img = new Image();
-          img.className = "screenshot";
-          img.alt = "Application screenshot";
+          img.className = 'screenshot';
+          img.alt = 'Application screenshot';
           img.onload = () => box.replaceWith(img);
           img.src = box.dataset.image;
         }
 
         // The carousel runs only while its slide is visible and motion is allowed.
-        const carousels = [...document.querySelectorAll(".profile-carousel")];
+        const carousels = [...document.querySelectorAll('.profile-carousel')];
         for (const carousel of carousels) {
-          const frames = [...carousel.querySelectorAll(".profile-frame")];
-          const label = carousel.querySelector(".profile-label");
-          const pauseButton = carousel.querySelector(".carousel-toggle");
+          const frames = [...carousel.querySelectorAll('.profile-frame')];
+          const label = carousel.querySelector('.profile-label');
+          const pauseButton = carousel.querySelector('.carousel-toggle');
           let frameIndex = 0;
           let timer;
           let isPaused = false;
           pauseButton.disabled = reducedMotion.matches;
           if (reducedMotion.matches) {
-            pauseButton.textContent = "Paused";
+            pauseButton.textContent = 'Paused';
             pauseButton.setAttribute(
-              "aria-label",
-              "Slideshow paused because reduced motion is enabled",
+              'aria-label',
+              'Slideshow paused because reduced motion is enabled',
             );
           }
 
           // Without any screenshots the carousel falls back to the dashed placeholder style.
           const markMissingFrame = (frame) => {
-            frame.dataset.missing = "true";
+            frame.dataset.missing = 'true';
             if (frames.every((item) => item.dataset.missing)) {
-              carousel.classList.add("is-missing");
+              carousel.classList.add('is-missing');
               stop();
             }
           };
           const showFrame = (index) => {
             frameIndex = index % frames.length;
             frames.forEach((frame, position) =>
-              frame.classList.toggle("active", position === frameIndex),
+              frame.classList.toggle('active', position === frameIndex),
             );
             frames.forEach((frame, position) =>
               frame.setAttribute(
-                "aria-hidden",
-                position === frameIndex ? "false" : "true",
+                'aria-hidden',
+                position === frameIndex ? 'false' : 'true',
               ),
             );
             label.textContent = frames[frameIndex].dataset.label;
@@ -1627,15 +1644,15 @@
           const start = () => {
             stop();
             carousel.setAttribute(
-              "aria-live",
-              isPaused || reducedMotion.matches ? "polite" : "off",
+              'aria-live',
+              isPaused || reducedMotion.matches ? 'polite' : 'off',
             );
             if (
-              carousel.classList.contains("is-missing") ||
+              carousel.classList.contains('is-missing') ||
               isPaused ||
               reducedMotion.matches ||
               document.hidden ||
-              !carousel.closest(".slide")?.classList.contains("active")
+              !carousel.closest('.slide')?.classList.contains('active')
             )
               return;
             timer = setInterval(
@@ -1645,23 +1662,23 @@
           };
           const togglePause = () => {
             isPaused = !isPaused;
-            pauseButton.textContent = isPaused ? "Play" : "Pause";
+            pauseButton.textContent = isPaused ? 'Play' : 'Pause';
             pauseButton.setAttribute(
-              "aria-label",
-              isPaused ? "Resume slideshow" : "Pause slideshow",
+              'aria-label',
+              isPaused ? 'Resume slideshow' : 'Pause slideshow',
             );
             start();
           };
           carousel
-            .querySelector(".carousel-previous")
-            .addEventListener("click", () =>
+            .querySelector('.carousel-previous')
+            .addEventListener('click', () =>
               showFrame((frameIndex - 1 + frames.length) % frames.length),
             );
           carousel
-            .querySelector(".carousel-next")
-            .addEventListener("click", () => showFrame(frameIndex + 1));
-          pauseButton.addEventListener("click", togglePause);
-          carousel.addEventListener("focusin", (event) => {
+            .querySelector('.carousel-next')
+            .addEventListener('click', () => showFrame(frameIndex + 1));
+          pauseButton.addEventListener('click', togglePause);
+          carousel.addEventListener('focusin', (event) => {
             if (
               reducedMotion.matches ||
               event.target === pauseButton ||
@@ -1669,42 +1686,42 @@
             )
               return;
             isPaused = true;
-            pauseButton.textContent = "Play";
-            pauseButton.setAttribute("aria-label", "Resume slideshow");
+            pauseButton.textContent = 'Play';
+            pauseButton.setAttribute('aria-label', 'Resume slideshow');
             start();
           });
-          reducedMotion.addEventListener("change", ({ matches }) => {
+          reducedMotion.addEventListener('change', ({ matches }) => {
             pauseButton.disabled = matches;
             if (matches) {
               isPaused = true;
-              pauseButton.textContent = "Paused";
+              pauseButton.textContent = 'Paused';
               pauseButton.setAttribute(
-                "aria-label",
-                "Slideshow paused because reduced motion is enabled",
+                'aria-label',
+                'Slideshow paused because reduced motion is enabled',
               );
             } else {
               isPaused = false;
-              pauseButton.textContent = "Pause";
-              pauseButton.setAttribute("aria-label", "Pause slideshow");
+              pauseButton.textContent = 'Pause';
+              pauseButton.setAttribute('aria-label', 'Pause slideshow');
             }
             start();
           });
           for (const frame of frames) {
-            frame.addEventListener("error", () => markMissingFrame(frame));
+            frame.addEventListener('error', () => markMissingFrame(frame));
             if (frame.complete && frame.naturalWidth === 0)
               markMissingFrame(frame);
           }
-          new MutationObserver(start).observe(carousel.closest(".slide"), {
+          new MutationObserver(start).observe(carousel.closest('.slide'), {
             attributes: true,
-            attributeFilter: ["class"],
+            attributeFilter: ['class'],
           });
-          document.addEventListener("visibilitychange", start);
+          document.addEventListener('visibilitychange', start);
           start();
         }
         // A restrained ambient highlight adds depth without becoming part of the content.
-        const spotlight = document.querySelector(".spotlight");
+        const spotlight = document.querySelector('.spotlight');
         document.addEventListener(
-          "pointermove",
+          'pointermove',
           ({ clientX, clientY }) => {
             if (reducedMotion.matches) return;
             spotlight.style.left = `${clientX}px`;

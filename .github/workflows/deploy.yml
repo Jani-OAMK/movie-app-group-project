@@ -53,24 +53,21 @@ jobs:
             
             docker network create movie-net 2>/dev/null || true
 
-            docker rm -f movie-backend movie-frontend 2>/dev/null || true
+            # This deployment intentionally starts PostgreSQL from a clean volume.
+            docker rm -f movie-backend movie-frontend movie-db 2>/dev/null || true
+            docker volume rm postgres_movie_data 2>/dev/null || true
             docker build -t movie-backend ./Backend
             docker build -t movie-frontend ./Frontend
 
             docker volume create postgres_movie_data >/dev/null
-            if docker container inspect movie-db >/dev/null 2>&1; then
-              docker start movie-db >/dev/null 2>&1 || true
-            else
-              docker run -d --name movie-db \
-                --network movie-net \
-                -e POSTGRES_USER="$DB_USER" \
-                -e POSTGRES_PASSWORD="$DB_PASSWORD" \
-                -e POSTGRES_DB="$DB_NAME" \
-                -p 5432:5432 \
-                -v postgres_movie_data:/var/lib/postgresql/data \
-                postgres:16
-            fi
-            docker network connect movie-net movie-db 2>/dev/null || true
+            docker run -d --name movie-db \
+              --network movie-net \
+              -e POSTGRES_USER="$DB_USER" \
+              -e POSTGRES_PASSWORD="$DB_PASSWORD" \
+              -e POSTGRES_DB="$DB_NAME" \
+              -p 5432:5432 \
+              -v postgres_movie_data:/var/lib/postgresql/data \
+              postgres:16
 
             docker run -d \
               --name movie-backend \
@@ -95,11 +92,25 @@ jobs:
 
             echo "Waiting for database to accept connections..."
             for i in $(seq 1 30); do
-              if docker exec movie-db pg_isready -U "$DB_USER" -d "$DB_NAME" >/dev/null 2>&1; then
+              if docker exec movie-db pg_isready -U "$DB_USER" -d postgres >/dev/null 2>&1; then
                 break
               fi
               sleep 1
             done
+
+            if ! docker exec movie-db psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1;" >/dev/null 2>&1; then
+              for i in $(seq 1 30); do
+                if docker exec movie-db createdb -U "$DB_USER" "$DB_NAME" >/dev/null 2>&1; then
+                  break
+                fi
+                sleep 1
+              done
+            fi
+
+            if ! docker exec movie-db psql -U "$DB_USER" -d "$DB_NAME" -c "SELECT 1;" >/dev/null 2>&1; then
+              echo "Application database was not created"
+              exit 1
+            fi
 
             docker exec -i movie-db psql -U "$DB_USER" -d "$DB_NAME" < Backend/schema.sql
 
